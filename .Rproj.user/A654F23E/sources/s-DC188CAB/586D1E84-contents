@@ -1,0 +1,17 @@
+
+library(extrafont)
+hist(rnorm(200,38,3))
+
+
+x <- data.frame(y = 25,x = 1, ymin= 15, ymax=35)
+
+library(tidyverse)
+ggplot(x)+
+  geom_errorbar(aes(ymin=ymin,ymax=ymax,x=x),width=0,size=8,colour='lightblue')+
+  geom_point(aes(x=x,y=y))+
+  ylab("Height above MSL (m)")+
+  Theme_HiDEF(axis_title_size = 18,axis_title_family = "Arial")+
+  scale_y_continuous(limits=c(0,50))+
+  scale_x_continuous(limits=c(0.975,1.025),breaks=c())+
+  geom_hline(aes(yintercept = 0),size=2)+
+  xlab("")
