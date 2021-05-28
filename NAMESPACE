@@ -2,6 +2,8 @@
 
 export(Load_Libs)
 export(Theme_HiDEF)
+export(hidefblue)
+export(hidefred)
 export(read.fortify)
 import(ggplot2)
 import(sf)

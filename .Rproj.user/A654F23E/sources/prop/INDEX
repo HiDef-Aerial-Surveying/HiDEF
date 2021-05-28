@@ -6,6 +6,7 @@ D%3A%2FHG0001%20-%20Flight%20Height%20manuscript%2FScripts%2FMASTER_SCRIPT.R="30
 D%3A%2FR_Packages%2FHiDef%2FDESCRIPTION="A112D11A"
 D%3A%2FR_Packages%2FHiDef%2FR%2FHELPERS.R="C8764411"
 D%3A%2FR_Packages%2FHiDef%2FR%2FTheme_HiDef.R="51025D26"
+D%3A%2FR_Packages%2FHiDef%2FR%2Fcolors.R="F90B7321"
 D%3A%2FR_Packages%2FHiDef%2FR%2Fload_libs.R="D168C5C4"
 D%3A%2FR_Packages%2FHiDef%2FR%2Fread_fortify.R="D28FDEA3"
 D%3A%2FR_Packages%2FHiDef%2Fman%2FTheme_HiDEF.Rd="78831E34"
