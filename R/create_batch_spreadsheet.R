@@ -46,3 +46,12 @@ create_batch_spreadsheet <- function(path, Zone, shape, outdir){
 }
 
 
+
+#HiDef::create_batch_spreadsheet(path = "R:/Projects/HP00000 - Projects/HP00095 - Equinor Dudgeon and Sheringham Shoal extensions/",
+#                         Zone = "67", shape = "BirdSurveyArea_20180420_extended_4km_buffer_WGS84.shp",outdir = "R:/Projects/HP00000 - Projects/HP00095 - Equinor Dudgeon and Sheringham Shoal extensions/")
+
+
+
+
+
+

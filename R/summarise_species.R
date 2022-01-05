@@ -20,31 +20,44 @@ summarise_species <- function(path, species){
   dat <- dat %>% filter(Species == species)
 
   #format date
-  dat <- dat %>% mutate(`Survey Date` = as.Date(`Survey Date`, format = "%d/%m/%y"))
+  dat <- dat %>% mutate(`Survey Date` = as.Date(`Survey Date`, format = "%d/%m/%Y"))
 
   #filter behaviours of interest
-  dat <- dat %>% filter(Behaviour %in% c("Taking off", "Sitting", "Diving", "Flying S", "Flying NW", "Flying W", "Flying NE", "Flying SE", "Flying E", "Flying SW", "Flying N", "Flying (direction unknown)"))
+  #filter by birds...
+  dat <- dat %>% filter(`Broad Category` == "Bird")
 
   #create new behaviour class based on grouping flying
-  #this could be better
-  dat$new_beh <- NA
-  dat$new_beh[dat$Behaviour == "Taking off"] <- "Taking off"
-  dat$new_beh[dat$Behaviour == "Sitting"] <- "Sitting"
-  dat$new_beh[dat$Behaviour == "Diving"] <- "Diving"
-  dat$new_beh[dat$Behaviour %in% c("Flying S", "Flying NW", "Flying W", "Flying NE", "Flying SE", "Flying E", "Flying SW", "Flying N", "Flying (direction unknown)")] <- "Flying"
-  dat$new_beh <- as.factor(dat$new_beh)
+  dat <- dat %>% mutate(new_beh = case_when(Behaviour == "Taking off" ~ "Taking Off",
+                                            Behaviour %in% c("Sitting","Sitting on man-made object") ~ "Sitting",
+                                            Behaviour == "Diving" ~ "Diving",
+                                            Behaviour %in% c("Flying S", "Flying NW", "Flying W", "Flying NE", "Flying SE", "Flying E", "Flying SW", "Flying N", "Flying (direction unknown)") ~ "Flying",
+                                            TRUE ~ "Other")) %>%
+    mutate(new_beh = as.factor(new_beh))
 
   #use tally to count rows grouped by species, survey date and behaviour
   output <- dat %>% group_by(Species, `Survey Date`, new_beh) %>% tally
   names(output) <- c("Species", "SurveyDate", "Behaviour", "Count")
+
   #pivot table so that behaviours are columns not rows
   output <- output %>% pivot_wider(names_from = Behaviour, values_from = Count, values_fill = 0)
 
+  # issue when not all behaviours are observed for a species
+  # still want to output column but with zeros
+
+  # create a dummy dataframe with the four behaviour groups
+  columns = c("Taking Off", "Sitting", "Diving", "Other") %>%
+    map_dfr( ~tibble(!!.x := logical() ) )
+
+  # combining this with the output file will add missing columns
+  output <- output %>% bind_rows(columns)
+  output[is.na(output)] <- 0
+
   #create total and % flying columns
-  output <- output %>% mutate("Total" = sum(Flying, Sitting, `Taking off`, Diving),
-                              "% Flying" = Flying/Total*100)
+  output <- output %>% mutate("Total" = sum(Flying, Sitting, `Taking Off`, Diving),
+                              "Flying%" = round((Flying/Total*100), digits = 0))
+
   #sort columns
-  output <- output %>% select("Species", "SurveyDate",  "Diving", "Flying", "Sitting", "Taking off", "% Flying", "Total")
+  output <- output %>% select("Species", "SurveyDate",  "Diving", "Flying", "Sitting", "Taking Off", "Flying%", "Total")
   #ungroup
   output <- output %>% ungroup
 
