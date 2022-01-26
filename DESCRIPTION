@@ -1,7 +1,7 @@
 Package: HiDef
 Type: Package
 Title: The HiDEF useful functions package
-Version: 0.1.1
+Version: 0.2.0
 Author: Grant Humphries
 Maintainer: Grant Humphries <grant.humphries@hidefsurveying.co.uk>
 Description: This package contains useful internal HiDEF functions that are often recycled in projects.
