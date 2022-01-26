@@ -28,7 +28,7 @@ summarise_species <- function(path, species){
 
   #create new behaviour class based on grouping flying
   dat <- dat %>% mutate(new_beh = case_when(Behaviour == "Taking off" ~ "Taking Off",
-                                            Behaviour %in% c("Sitting","Sitting on man-made object") ~ "Sitting",
+                                            Behaviour == "Sitting" ~ "Sitting",
                                             Behaviour == "Diving" ~ "Diving",
                                             Behaviour %in% c("Flying S", "Flying NW", "Flying W", "Flying NE", "Flying SE", "Flying E", "Flying SW", "Flying N", "Flying (direction unknown)") ~ "Flying",
                                             TRUE ~ "Other")) %>%
