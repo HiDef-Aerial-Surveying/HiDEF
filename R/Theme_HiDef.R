@@ -9,7 +9,6 @@
 #' X <- data.frame(x=runif(100),y=runif(100))
 #' ggplot(X,aes(x=x,y=y))+geom_point()+Theme_HiDEF()
 
-
 Theme_HiDEF <- function (base_family = "Gill Sans MT", base_size = 11.5, plot_title_family = base_family,
           plot_title_size = 18, plot_title_face = "bold", plot_title_margin = 10,
           subtitle_family = base_family, subtitle_size = 12, subtitle_face = "plain",
