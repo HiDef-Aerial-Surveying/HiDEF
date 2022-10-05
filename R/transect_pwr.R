@@ -92,7 +92,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
   }
 
   ## Calculate the transect spacing and apply to the data frame for naming
-  tspace <- round(nseq/length(unique(CC$transect)),2)*t.space
+  tspace <- round(length(unique(CC$transect))/nseq,2)*t.space
   labs <- paste0(tspace,"km")
   names(labs) <- nseq
 
