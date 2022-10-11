@@ -18,6 +18,7 @@
 #' @param nr Integer. The number of replicate distribution samples to run.
 #' @param plot Boolean. Whether or not to plot the output in the console. A plot
 #' will be returned in the output list.
+#' @param by.density Boolean. If TRUE, will use density rather than count
 #' @return A list. Contains plotobj (the plot as a ggplot), powervals (the data
 #' frame with power values), and samplesize (the sample sizes as a data frame)
 #'
@@ -49,7 +50,7 @@
 
 
 transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
-                         m=10,nr=1000,plot=TRUE){
+                         m=10,nr=1000,plot=TRUE,by.density=FALSE){
   ## Load fonts for plot
   extrafont::loadfonts(quiet = TRUE)
   ### Validation checks
@@ -115,6 +116,13 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
     ## Check number of animals
     cat(sum(CCsb$Species),"\n")
     samplesize[spec_count,2] <- sum(CCsb$Species)
+
+    ### If doing by density, then change so Species column is a density
+    if(by.density==TRUE){
+      CCsb$Species <- CCsb$Species/CCsb$seg_area
+    }
+
+
     ## Check number of transects with observations
     summ <- CCsb %>% dplyr::group_by(transect) %>% summarise(total=sum(Species))
     n.transects <- length(which(summ$total > 0))
@@ -184,7 +192,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
 
   }
 
- ## Create a plot
+  ## Create a plot
   G <- ggplot(finalall) +
     geom_line(aes(x=effectsz*100,y=power,group=species,color=species),size=1.5)+
     geom_hline(aes(yintercept=0.8),linetype='dashed',size=1)+
