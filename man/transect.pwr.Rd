@@ -12,7 +12,8 @@ transect.pwr(
   kseq = seq(0, 1, by = 0.1),
   m = 10,
   nr = 1000,
-  plot = TRUE
+  plot = TRUE,
+  by.density = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ statistical power is to be tested).}
 
 \item{plot}{Boolean. Whether or not to plot the output in the console. A plot
 will be returned in the output list.}
+
+\item{by.density}{Boolean. If TRUE, will use density rather than count}
 }
 \value{
 A list. Contains plotobj (the plot as a ggplot), powervals (the data
