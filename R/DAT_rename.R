@@ -7,6 +7,9 @@
 #' will be a shapefile (.shp)
 #' @return renames field names to within 10 character limit
 #' @export
+#'
+#' @import sf
+#'
 #' @examples
 #' DAT <- "R:\\Projects\\HP00000 - Projects\\HP00119 - Cierco Atlantic Cluster (Llyr)\\700 - Analysis Reports\\files for EIA"
 #' DAT_rename(DAT)
