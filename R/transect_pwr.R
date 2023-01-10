@@ -93,10 +93,11 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
   }
 
   ## Calculate the transect spacing and apply to the data frame for naming
-  tspace <- round(length(unique(CC$transect))/nseq,2)*t.space
-  labs <- paste0(tspace,"km")
+  #tspace <- round(length(unique(CC$transect))/nseq,2)*t.space
+  #labs <- paste0(tspace,"km")
+  #names(labs) <- nseq
+  labs <- names(nseq)
   names(labs) <- nseq
-
   ## Get species labels from SppLookup
   Species.Labels <- left_join(data.frame(BTO_CODE=substr(Species,3,4)), SppLookup,by="BTO_CODE")$Species
 
@@ -118,9 +119,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
     samplesize[spec_count,2] <- sum(CCsb$Species)
 
     ### If doing by density, then change so Species column is a density
-    if(by.density==TRUE){
-      CCsb$Species <- CCsb$Species/CCsb$seg_area
-    }
+    if(by.density==TRUE){ CCsb$Species <- CCsb$Species/CCsb$seg_area}
 
 
     ## Check number of transects with observations
