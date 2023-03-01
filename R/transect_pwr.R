@@ -96,7 +96,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
   #tspace <- round(length(unique(CC$transect))/nseq,2)*t.space
   #labs <- paste0(tspace,"km")
   #names(labs) <- nseq
-  labs <- names(nseq)
+  #labs <- names(nseq)
   names(labs) <- nseq
   ## Get species labels from SppLookup
   Species.Labels <- left_join(data.frame(BTO_CODE=substr(Species,3,4)), SppLookup,by="BTO_CODE")$Species
