@@ -18,16 +18,16 @@
 #' @import officer
 
 #' @examples
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500)
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250)
 #'
 #' #with lower and upper CI
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750)
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275)
 #'
 #' #with lower and upper CI and excel print out
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="excel",outdir="C:/Temp/")
+#' Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="excel",outdir="C:/Temp/")
 #'
 #' #with lower and upper CI and word print out
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="word",outdir="C:/Temp/")
+#' Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="word",outdir="C:/Temp/")
 
 
 Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout="none",outdir=NULL){
