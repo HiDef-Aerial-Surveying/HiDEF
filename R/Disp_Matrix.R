@@ -85,8 +85,6 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
     dismat <- out
   }
 
-  return(dismat)
-
   ### Write out xlsx file if writeout == "excel"
   if(writeout == "excel"){
     if(is.null(outdir)){
@@ -113,5 +111,7 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
                      align = "center")
     }
   }
+
+  if(is.na(writeout)) {return(dismat)}
 }
 
