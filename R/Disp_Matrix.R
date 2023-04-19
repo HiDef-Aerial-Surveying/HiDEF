@@ -101,7 +101,7 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
       stop("output directory is NULL, please define outdir")
     }else{
       filen <- paste0(outdir,"/",Species,"_",Season,".docx")
-      flextable::flextable(Kittiwake_Breeding %>% tibble::rownames_to_column("mort")) %>%
+      flextable::flextable(dismat %>% tibble::rownames_to_column("mort")) %>%
         flextable::align(align = "center") %>%
         flextable::style(pr_t= fp_text(font.family='Gill Sans MT'), part = "all") %>%
         flextable::fontsize(size = 8, part = "all") %>%
