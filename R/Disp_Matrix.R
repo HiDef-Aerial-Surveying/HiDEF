@@ -7,7 +7,7 @@
 #' @param MSP a numeric value. The mean seasonal peak or population estimate to generate the matrix from
 #' @param MSPlowerCI a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI)
 #' @param MSPupperCI a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI)
-#' @param writeout If NA (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output
+#' @param writeout If "none" (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output
 #' @param outdir a character string. The output directory for the xlsx file
 #' @return A matrix. The displacement matrix for the species and season of interest
 #'
@@ -18,10 +18,10 @@
 #' @import officer
 
 #' @examples
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,writeout=NA,outdir="C:/Temp/")
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500)
 #'
 #' #with lower and upper CI
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout=NA,outdir="C:/Temp/")
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750)
 #'
 #' #with lower and upper CI and excel print out
 #' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="excel",outdir="C:/Temp/")
@@ -30,7 +30,7 @@
 #' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="word",outdir="C:/Temp/")
 
 
-Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=NA,outdir=NULL){
+Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout="none",outdir=NULL){
 
   colvals <- c(0,0.01,0.02,0.03,0.04,0.05,0.1,0.15,0.20,0.3,0.5,0.8,1)
   rowvals <- seq(0,1,by=.1)
@@ -112,6 +112,6 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
     }
   }
 
-  if(is.na(writeout)) {return(dismat)}
+  if(writeout == "none") {return(dismat)}
 }
 
