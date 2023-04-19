@@ -100,18 +100,28 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
     if(is.null(outdir)){
       stop("output directory is NULL, please define outdir")
     }else{
+      if(is.na(MSPlowerCI)&is.na(MSPupperCI)) {tbltext <- c("Number of birds", "Mortality Rate (%)")}else{tbltext <- c("Number of birds (LCL, UCL)", "Mortality Rate (%)")}
+
       filen <- paste0(outdir,"/",Species,"_",Season,".docx")
-      flextable::flextable(dismat %>% tibble::rownames_to_column("mort")) %>%
+
+      dismat %>%
+        tibble::rownames_to_column() %>%
+        tibble::add_column(z = "Displacement Rate (%)", .before =1) %>%
+        flextable::flextable() %>%
         flextable::align(align = "center") %>%
-        flextable::style(pr_t= fp_text(font.family='Gill Sans MT'), part = "all") %>%
+        flextable::style(pr_t= officer::fp_text(font.family='Gill Sans MT'), part = "all") %>%
         flextable::fontsize(size = 8, part = "all") %>%
+        flextable::add_header_row(colwidths = c(2,13), values = tbltext) %>%
+        flextable::merge_v(j=1) %>%
+        flextable::merge_at(i = 1:2, j = 1:2, part= "header" ) %>%
+        flextable::rotate(j = 1, rotation = "btlr") %>%
         flextable::save_as_docx(path = filen,
-                     pr_section = officer::prop_section(
-                       page_size = officer::page_size(orient = "landscape")),
-                     align = "center")
+                                pr_section = officer::prop_section(
+                                  page_size = officer::page_size(orient = "landscape")),
+                                align = "center")
     }
   }
-
+  #if no writeout then return as R data.frame
   if(writeout == "none") {return(dismat)}
 }
 
