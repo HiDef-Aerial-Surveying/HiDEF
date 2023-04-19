@@ -101,13 +101,13 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
       stop("output directory is NULL, please define outdir")
     }else{
       filen <- paste0(outdir,"/",Species,"_",Season,".docx")
-      flextable(Kittiwake_Breeding %>% rownames_to_column("mort")) %>%
-        align(align = "center") %>%
-        style(pr_t= fp_text(font.family='Gill Sans MT'), part = "all") %>%
-        fontsize(size = 8, part = "all") %>%
-        save_as_docx(path = filen,
-                     pr_section = prop_section(
-                       page_size = page_size(orient = "landscape")),
+      flextable::flextable(Kittiwake_Breeding %>% tibble::rownames_to_column("mort")) %>%
+        flextable::align(align = "center") %>%
+        flextable::style(pr_t= fp_text(font.family='Gill Sans MT'), part = "all") %>%
+        flextable::fontsize(size = 8, part = "all") %>%
+        flextable::save_as_docx(path = filen,
+                     pr_section = officer::prop_section(
+                       page_size = officer::page_size(orient = "landscape")),
                      align = "center")
     }
   }
