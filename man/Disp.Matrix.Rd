@@ -4,16 +4,28 @@
 \alias{Disp.Matrix}
 \title{Create displacement matrices}
 \usage{
-Disp.Matrix(Species, Season, SMP, writexlsx = TRUE, outdir = NULL)
+Disp.Matrix(
+  Species,
+  Season,
+  MSP,
+  MSPlowerCI = NA,
+  MSPupperCI = NA,
+  writeout = NA,
+  outdir = NULL
+)
 }
 \arguments{
 \item{Species}{a character string. Name of the species}
 
 \item{Season}{a character string. The season the matrix applies to}
 
-\item{SMP}{a numeric value. The seasonal mean peak or population estimate to generate the matrix from}
+\item{MSP}{a numeric value. The mean seasonal peak or population estimate to generate the matrix from}
 
-\item{writexlsx}{a boolean. If TRUE, an xlsx file will be created in the outdir}
+\item{MSPlowerCI}{a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI)}
+
+\item{MSPupperCI}{a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI)}
+
+\item{writeout}{If NA (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output}
 
 \item{outdir}{a character string. The output directory for the xlsx file}
 }
@@ -24,5 +36,14 @@ A matrix. The displacement matrix for the species and season of interest
 Takes a value and then generates a decay-matrix for use in displacement assessments
 }
 \examples{
-Kittwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",2500,writexlsx=TRUE,outdir="C:/Temp/")
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,writeout=NA,outdir="C:/Temp/")
+
+#with lower and upper CI
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout=NA,outdir="C:/Temp/")
+
+#with lower and upper CI and excel print out
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="excel",outdir="C:/Temp/")
+
+#with lower and upper CI and word print out
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=2500,MSPlowerCI=1500,MSPupperCI=2750,writeout="word",outdir="C:/Temp/")
 }

@@ -22,7 +22,8 @@ Imports:
     rmapshaper,
     officer,
     flextable,
-    tibble
+    tibble,
+    dplyr
 Depends: 
     R (>= 2.10),
     tidyverse

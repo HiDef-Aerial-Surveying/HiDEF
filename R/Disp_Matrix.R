@@ -7,7 +7,7 @@
 #' @param MSP a numeric value. The mean seasonal peak or population estimate to generate the matrix from
 #' @param MSPlowerCI a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI)
 #' @param MSPupperCI a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI)
-#' @param writeout If NA (default) then no output is written to outdir, if "excel" the .xlsx file output, if "word" then .docx file output
+#' @param writeout If NA (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output
 #' @param outdir a character string. The output directory for the xlsx file
 #' @return A matrix. The displacement matrix for the species and season of interest
 #'
