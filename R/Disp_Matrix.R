@@ -124,4 +124,3 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
   #if no writeout then return as R data.frame
   if(writeout == "none") {return(dismat)}
 }
-
