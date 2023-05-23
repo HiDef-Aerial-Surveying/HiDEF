@@ -9,7 +9,7 @@ transect.pwr(
   Species,
   nseq = NULL,
   t.space,
-  kseq = seq(0, 1, by = 0.1),
+  kseq = seq(0, -1, by = -0.1),
   m = 10,
   nr = 1000,
   plot = TRUE,
@@ -46,7 +46,7 @@ will be returned in the output list.}
 \item{alternative}{indicates the alternative hypothesis and must be one of
 "two.sided" (default), "less", or "greater". You can specify just the initial
 letter of the value, but the argument name must be given in full. See
-‘Details’ for the meanings of the possible values.}
+‘Details’ of stats::ks.test() for the meanings of the possible values.}
 }
 \value{
 A list. Contains plotobj (the plot as a ggplot), powervals (the data

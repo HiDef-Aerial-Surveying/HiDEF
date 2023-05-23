@@ -22,7 +22,7 @@
 #' @param alternative indicates the alternative hypothesis and must be one of
 #' "two.sided" (default), "less", or "greater". You can specify just the initial
 #' letter of the value, but the argument name must be given in full. See
-#' ‘Details’ for the meanings of the possible values.
+#' ‘Details’ of stats::ks.test() for the meanings of the possible values.
 #' @return A list. Contains plotobj (the plot as a ggplot), powervals (the data
 #' frame with power values), and samplesize (the sample sizes as a data frame)
 #'
@@ -53,8 +53,8 @@
 
 
 
-transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
-                         m=10,nr=1000,plot=TRUE,by.density=FALSE, alternative = "two.sided"){
+transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,-1,by=-0.1),
+                         m=10,nr=1000,plot=TRUE,by.density=FALSE, alternative= "two.sided"){
   ## Load fonts for plot
   extrafont::loadfonts(quiet = TRUE)
   ### Validation checks
@@ -167,6 +167,12 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
             if(k == 0){
               k <- 0.00001
             }
+            if(k == -1){
+              k <- -0.99999999
+            }
+            if(k == 1){
+              k <- 0.99999999
+            }
             ### Then create a random distribution using the mean x effect size
             ### to simulate a decrease in the population size within a
             ### quasipoisson
@@ -194,7 +200,6 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
     return(final)
 
   }
-
   ## Create a plot
   G <- ggplot(finalall) +
     geom_line(aes(x=effectsz*100,y=power,group=species,color=species),size=1.5)+
@@ -217,4 +222,3 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
 
   return(outlist)
 }
-
