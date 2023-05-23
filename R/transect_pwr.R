@@ -43,13 +43,13 @@
 #' ## Number of replicates
 #' nr <- 100
 #' ## Create the sequences of the original population (effect size)
-#' kseq <- seq(0,1,by=0.1)
+#' kseq <- seq(0,-1,by=-0.1)
 #' ## Create the number of transects to test
 #' nseq <- c(21,43,64,86)
 #' labs <- c("5km","2.5km","1.68km","1.25km")
 #' names(labs) <- nseq
 #' Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
-#' poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE, alternative = "less")
+#' poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,kseq = kseq,t.space = 2.5,m = m,nr = nr, plot = TRUE, alternative = "less")
 
 
 
