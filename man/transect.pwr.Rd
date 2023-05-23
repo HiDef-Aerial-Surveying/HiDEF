@@ -13,7 +13,8 @@ transect.pwr(
   m = 10,
   nr = 1000,
   plot = TRUE,
-  by.density = FALSE
+  by.density = FALSE,
+  alternative = "two.sided"
 )
 }
 \arguments{
@@ -41,6 +42,11 @@ statistical power is to be tested).}
 will be returned in the output list.}
 
 \item{by.density}{Boolean. If TRUE, will use density rather than count}
+
+\item{alternative}{indicates the alternative hypothesis and must be one of
+"two.sided" (default), "less", or "greater". You can specify just the initial
+letter of the value, but the argument name must be given in full. See
+‘Details’ for the meanings of the possible values.}
 }
 \value{
 A list. Contains plotobj (the plot as a ggplot), powervals (the data
@@ -66,5 +72,5 @@ nseq <- c(21,43,64,86)
 labs <- c("5km","2.5km","1.68km","1.25km")
 names(labs) <- nseq
 Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
-poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE)
+poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE, alternative = "less")
 }
