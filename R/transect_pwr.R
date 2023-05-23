@@ -19,6 +19,10 @@
 #' @param plot Boolean. Whether or not to plot the output in the console. A plot
 #' will be returned in the output list.
 #' @param by.density Boolean. If TRUE, will use density rather than count
+#' @param alternative indicates the alternative hypothesis and must be one of
+#' "two.sided" (default), "less", or "greater". You can specify just the initial
+#' letter of the value, but the argument name must be given in full. See
+#' ‘Details’ for the meanings of the possible values.
 #' @return A list. Contains plotobj (the plot as a ggplot), powervals (the data
 #' frame with power values), and samplesize (the sample sizes as a data frame)
 #'
@@ -45,12 +49,12 @@
 #' labs <- c("5km","2.5km","1.68km","1.25km")
 #' names(labs) <- nseq
 #' Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
-#' poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE)
+#' poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE, alternative = "less")
 
 
 
 transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
-                         m=10,nr=1000,plot=TRUE,by.density=FALSE){
+                         m=10,nr=1000,plot=TRUE,by.density=FALSE, alternative = "two.sided"){
   ## Load fonts for plot
   extrafont::loadfonts(quiet = TRUE)
   ### Validation checks
@@ -166,9 +170,9 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
             ### Then create a random distribution using the mean x effect size
             ### to simulate a decrease in the population size within a
             ### quasipoisson
-            z <- rnbinom(n = n, mu = mu*k, size = (mu*k)/(Theta - 1))
+            z <- rnbinom(n = n, mu = mu*(1+k), size = (mu*(1+k))/(Theta - 1))
             ### perform a one-tailed ks test
-            m1 <- ks.test(y,z,alternative = "less")
+            m1 <- ks.test(y,z,alternative = alternative)
             m1$p.value
           }
           pval
@@ -197,7 +201,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,1,by=0.1),
     geom_hline(aes(yintercept=0.8),linetype='dashed',size=1)+
     scale_color_brewer(palette = "Dark2",name="",
                        labels=Species.Labels)+
-    xlab("% original population") +
+    xlab("% change") +
     ylab("Power")+
     facet_wrap(~ntrans,labeller = as_labeller(labs))+
     HiDef::Theme_HiDEF(axis_title_size = 16)+
