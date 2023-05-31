@@ -11,13 +11,13 @@ DAT_rename(DAT)
 will be a shapefile (.shp)}
 }
 \value{
-renames fields to reduce to 10 character limit
+renames field names to within 10 character limit
 }
 \description{
 Changes some of the usual problem field names so they comply with the 10
 character limit of filetype Shapefile (.shp).
 }
 \examples{
-DAT <- "R:\\\\Projects\\\\HP00000 - Projects\\\\HP00119 - Cierco Atlantic Cluster (Llyr)\\\\700 - Analysis Reports\\\\files for EIA"
-DAT_rename(DAT)
+#DAT <- sf::st_read("R:\\Projects\\HP00000 - Projects\\HP00119 - Cierco Atlantic Cluster (Llyr)\\700 - Analysis Reports\\files for EIA")
+#DAT_rename(DAT)
 }

@@ -11,8 +11,8 @@
 #' @import sf
 #'
 #' @examples
-#' DAT <- "R:\\Projects\\HP00000 - Projects\\HP00119 - Cierco Atlantic Cluster (Llyr)\\700 - Analysis Reports\\files for EIA"
-#' DAT_rename(DAT)
+#' #DAT <- sf::st_read("R:\\Projects\\HP00000 - Projects\\HP00119 - Cierco Atlantic Cluster (Llyr)\\700 - Analysis Reports\\files for EIA")
+#' #DAT_rename(DAT)
 
 
 DAT_rename <- function(DAT) {

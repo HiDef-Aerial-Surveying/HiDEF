@@ -9,11 +9,11 @@ transect.pwr(
   Species,
   nseq = NULL,
   t.space,
-  kseq = seq(0, 1, by = 0.1),
-  m = 10,
-  nr = 1000,
+  kseq = seq(0, -1, by = -0.1),
+  nSim = 10000,
   plot = TRUE,
-  by.density = FALSE
+  by.density = FALSE,
+  alternative = "two.sided"
 )
 }
 \arguments{
@@ -33,14 +33,17 @@ cent count.}
 effect sizes to test (i.e., the % of original population size for which
 statistical power is to be tested).}
 
-\item{m}{Integer. The number of times transects are sampled. Default = 10}
-
-\item{nr}{Integer. The number of replicate distribution samples to run.}
+\item{nSim}{Number of simulations to run power analysis on.}
 
 \item{plot}{Boolean. Whether or not to plot the output in the console. A plot
 will be returned in the output list.}
 
 \item{by.density}{Boolean. If TRUE, will use density rather than count}
+
+\item{alternative}{indicates the alternative hypothesis and must be one of
+"two.sided" (default), "less", or "greater". You can specify just the initial
+letter of the value, but the argument name must be given in full. See
+‘Details’ of stats::ks.test() for the meanings of the possible values.}
 }
 \value{
 A list. Contains plotobj (the plot as a ggplot), powervals (the data
@@ -55,16 +58,12 @@ CentCount <- "D:/Power_Analysis/Data/Zone113_M02_S01_21_Output/Zone113_M02_S01_2
 ## Read the CentCount and convert to a data frame
 CC <- sf::st_read(CentCount)
 
-## Number of transect samples
-m <- 2
-## Number of replicates
-nr <- 100
 ## Create the sequences of the original population (effect size)
-kseq <- seq(0,1,by=0.1)
+kseq <- seq(0,-1,by=-0.1)
 ## Create the number of transects to test
 nseq <- c(21,43,64,86)
 labs <- c("5km","2.5km","1.68km","1.25km")
 names(labs) <- nseq
 Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
-poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,t.space = 2.5,m = m,nr = nr, plot = TRUE)
+poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,kseq = kseq,t.space = 2.5,nSim = 1000, plot = TRUE, alternative = "less")
 }
