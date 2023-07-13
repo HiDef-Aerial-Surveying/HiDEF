@@ -42,7 +42,7 @@
 #' ## Create the number of transects to test
 #' nseq <- c(21,43,64,86)
 #' labs <- c("5km","2.5km","1.68km","1.25km")
-#' names(labs) <- nseq
+#' names(nseq) <- labs
 #' Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
 #' poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,kseq = kseq,t.space = 2.5,nSim = 1000, plot = TRUE, alternative = "less")
 
@@ -97,14 +97,12 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,-1,by=-0.1),
   #names(labs) <- nseq
   labs <- names(nseq)
   names(labs) <- nseq
-  ## Get species labels from SppLookup
-  Species.Labels <- left_join(data.frame(BTO_CODE=substr(Species,3,4)), SppLookup,by="BTO_CODE")$Species
-  samplesize <- matrix(nrow=length(Species.Labels),ncol=3)
 
-  spec_count <- 1  ## Counter for building the samplesize matrix
+  samplesize <- matrix(nrow = length(Species), ncol = 3)
+  spec_count <- 1 ## Counter for building the samplesize matrix
   finalall <- foreach(Spec=Species,.combine='rbind',.errorhandling='remove') %do% {
     cat(Spec,"\n")
-    samplesize[spec_count,1] <- Species.Labels[spec_count]
+    samplesize[spec_count,1] <- Spec
     cat("##################################################################\n")
 
     ## Select the species of interest and get the coordinates
@@ -120,9 +118,7 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,-1,by=-0.1),
 
     cat(n.transects,"transects with observations \n")
 
-
     samplesize[spec_count,3] <- n.transects
-
     spec_count <- spec_count + 1
     ### Top level loops through transects (nseq)
     final <- foreach(n=nseq,.combine='rbind',.errorhandling = "remove") %do% {
@@ -182,16 +178,22 @@ transect.pwr <- function(CC,Species,nseq=NULL,t.space,kseq=seq(0,-1,by=-0.1),
 
   }
   ## Create a plot
+  Species.Labels <- left_join(data.frame(BTO_CODE = substr(Species, 3, 4)), SppLookup, by = "BTO_CODE") %>%
+    select(BTO_CODE, Species)
+  Species.Labels$BTO_CODE <- paste0("S_", Species.Labels$BTO_CODE)
+
+  finalall <- finalall %>%
+    left_join(Species.Labels, by = c("species"= "BTO_CODE"))
+
   G <- ggplot(finalall) +
-    geom_line(aes(x=effectsz*100,y=power,group=species,color=species),linewidth=1.5)+
-    geom_hline(aes(yintercept=0.8),linetype='dashed',size=1)+
-    scale_color_brewer(palette = "Dark2",name="",
-                       labels=Species.Labels)+
-    xlab("% change") +
-    ylab("Power")+
-    facet_wrap(~ntrans,labeller = as_labeller(labs))+
-    HiDef::Theme_HiDEF(axis_title_size = 16)+
-    theme(legend.text = element_text(size=14))
+    geom_line(aes(x = effectsz * 100, y = power, group = Species, color = Species),
+              linewidth = 1.5) +
+    geom_hline(aes(yintercept = 0.8), linetype = "dashed", size = 1) +
+    scale_color_brewer(palette = "Dark2", name = "") + xlab("% change") +
+    ylab("Power") +
+    facet_wrap(~ntrans, labeller = as_labeller(labs)) +
+    HiDef::Theme_HiDEF(axis_title_size = 16) +
+    theme(legend.text = element_text(size = 14))
 
   if(plot==TRUE){
     G

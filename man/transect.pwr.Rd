@@ -63,7 +63,7 @@ kseq <- seq(0,-1,by=-0.1)
 ## Create the number of transects to test
 nseq <- c(21,43,64,86)
 labs <- c("5km","2.5km","1.68km","1.25km")
-names(labs) <- nseq
+names(nseq) <- labs
 Species <- c("S_CX","S_SP","S_RH","S_GN","S_GD","S_CA")
 poweranalysis <- transect.pwr(CC=CC,Species = Species,nseq = nseq,kseq = kseq,t.space = 2.5,nSim = 1000, plot = TRUE, alternative = "less")
 }
