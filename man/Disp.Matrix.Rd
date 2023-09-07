@@ -11,23 +11,29 @@ Disp.Matrix(
   MSPlowerCI = NA,
   MSPupperCI = NA,
   writeout = "none",
-  outdir = NULL
+  outdir = NULL,
+  rounding = "round",
+  digits = 0
 )
 }
 \arguments{
-\item{Species}{a character string. Name of the species}
+\item{Species}{a character string. Name of the species.}
 
-\item{Season}{a character string. The season the matrix applies to}
+\item{Season}{a character string. The season the matrix applies to.}
 
-\item{MSP}{a numeric value. The mean seasonal peak or population estimate to generate the matrix from}
+\item{MSP}{a numeric value. The mean seasonal peak or population estimate to generate the matrix from.}
 
-\item{MSPlowerCI}{a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI)}
+\item{MSPlowerCI}{a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI).}
 
-\item{MSPupperCI}{a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI)}
+\item{MSPupperCI}{a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI).}
 
-\item{writeout}{If "none" (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output}
+\item{writeout}{If "none" (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output.}
 
-\item{outdir}{a character string. The output directory for the xlsx file}
+\item{outdir}{a character string. The output directory for the xlsx file.}
+
+\item{rounding}{a character string. Default is "round". Change to "ceiling" if you require outputs rounded up to whole birds.}
+
+\item{digits}{a numeric value. Set the number of digits you desire for outputs to be rounded to. Note: when using rounding = "ceiling" all outputs will be rounded to whole birds regardless.}
 }
 \value{
 A matrix. The displacement matrix for the species and season of interest
@@ -36,14 +42,18 @@ A matrix. The displacement matrix for the species and season of interest
 Takes a value and then generates a decay-matrix for use in displacement assessments
 }
 \examples{
-Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250)
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake", "Breeding", MSP=250)
 
 #with lower and upper CI
-Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275)
+Kittiwake_Breeding <- Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275)
 
 #with lower and upper CI and excel print out
-Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="excel",outdir="C:/Temp/")
+Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="excel", outdir="C:/Temp/")
 
 #with lower and upper CI and word print out
-Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="word",outdir="C:/Temp/")
+Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", outdir="C:/Temp/")
+
+#'
+#with lower and upper CI and word print out and set number of digits
+Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", digits = 2, outdir="C:/Temp/")
 }

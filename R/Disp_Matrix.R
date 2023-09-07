@@ -2,13 +2,15 @@
 #'
 #'
 #' Takes a value and then generates a decay-matrix for use in displacement assessments
-#' @param Species a character string. Name of the species
-#' @param Season a character string. The season the matrix applies to
-#' @param MSP a numeric value. The mean seasonal peak or population estimate to generate the matrix from
-#' @param MSPlowerCI a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI)
-#' @param MSPupperCI a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI)
-#' @param writeout If "none" (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output
-#' @param outdir a character string. The output directory for the xlsx file
+#' @param Species a character string. Name of the species.
+#' @param Season a character string. The season the matrix applies to.
+#' @param MSP a numeric value. The mean seasonal peak or population estimate to generate the matrix from.
+#' @param MSPlowerCI a numeric value. The mean seasonal peak lower CI value which will be copied into output as (lowerCI - upperCI).
+#' @param MSPupperCI a numeric value. The mean seasonal peak upper CI value which will be copied into output as (lowerCI - upperCI).
+#' @param rounding a character string. Default is "round". Change to "ceiling" if you require outputs rounded up to whole birds.
+#' @param digits a numeric value. Set the number of digits you desire for outputs to be rounded to. Note: when using rounding = "ceiling" all outputs will be rounded to whole birds regardless.
+#' @param writeout If "none" (default) then no output is written to outdir, if "excel" the .xlsx file is output, if "word" then .docx file is output.
+#' @param outdir a character string. The output directory for the xlsx file.
 #' @return A matrix. The displacement matrix for the species and season of interest
 #'
 #' @export
@@ -18,19 +20,23 @@
 #' @import officer
 
 #' @examples
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250)
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake", "Breeding", MSP=250)
 #'
 #' #with lower and upper CI
-#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275)
+#' Kittiwake_Breeding <- Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275)
 #'
 #' #with lower and upper CI and excel print out
-#' Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="excel",outdir="C:/Temp/")
+#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="excel", outdir="C:/Temp/")
 #'
 #' #with lower and upper CI and word print out
-#' Disp.Matrix("Kittiwake","Breeding",MSP=250,MSPlowerCI=150,MSPupperCI=275,writeout="word",outdir="C:/Temp/")
+#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", outdir="C:/Temp/")
+#'
+#' #'
+#' #with lower and upper CI and word print out and set number of digits
+#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", digits = 2, outdir="C:/Temp/")
 
 
-Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout="none",outdir=NULL){
+Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout="none",outdir=NULL, rounding = "round", digits = 0){
 
   colvals <- c(0,0.01,0.02,0.03,0.04,0.05,0.1,0.15,0.20,0.3,0.5,0.8,1)
   rowvals <- seq(0,1,by=.1)
@@ -39,7 +45,11 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
 
   for(i in 1:length(colvals)){
     for(j in 1:length(rowvals)){
-      dismat[j,i] <- format(ceiling(MSP * colvals[i] * rowvals[j]), big.mark=",")
+      if(rounding == "ceiling"){
+        dismat[j,i] <- format(ceiling(MSP * colvals[i] * rowvals[j]), big.mark=",", nsmall = digits)
+      } else {
+        dismat[j,i] <- format(round(MSP * colvals[i] * rowvals[j], digits = digits), big.mark=",", nsmall = digits)
+      }
     }
   }
   dismat <- data.frame(dismat)
@@ -52,7 +62,11 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
 
     for(i in 1:length(colvals)){
       for(j in 1:length(rowvals)){
-        dismat2[j,i] <- format(ceiling(MSPlowerCI * colvals[i] * rowvals[j]), big.mark=",")
+        if(rounding == "ceiling"){
+          dismat2[j,i] <- format(ceiling(MSPlowerCI * colvals[i] * rowvals[j]), big.mark=",", nsmall = digits)
+        } else {
+          dismat2[j,i] <- format(round(MSPlowerCI * colvals[i] * rowvals[j], digits = digits), big.mark=",", nsmall = digits)
+        }
       }
     }
     dismat2 <- data.frame(dismat2)
@@ -66,7 +80,11 @@ Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout=
 
     for(i in 1:length(colvals)){
       for(j in 1:length(rowvals)){
-        dismat3[j,i] <- format(ceiling(MSPupperCI * colvals[i] * rowvals[j]), big.mark=",")
+        if(rounding == "ceiling"){
+          dismat3[j,i] <- format(ceiling(MSPupperCI * colvals[i] * rowvals[j]), big.mark=",", nsmall = digits)
+        } else {
+          dismat3[j,i] <- format(round(MSPupperCI * colvals[i] * rowvals[j], digits = digits), big.mark=",", nsmall = digits)
+        }
       }
     }
     dismat3 <- data.frame(dismat3)
