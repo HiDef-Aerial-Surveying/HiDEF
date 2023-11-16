@@ -24,15 +24,6 @@
 #'
 #' #with lower and upper CI
 #' Kittiwake_Breeding <- Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275)
-#'
-#' #with lower and upper CI and excel print out
-#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="excel", outdir="C:/Temp/")
-#'
-#' #with lower and upper CI and word print out
-#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", outdir="C:/Temp/")
-#'
-#' #with lower and upper CI and word print out and set number of digits
-#' Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", digits = 2, outdir="C:/Temp/")
 
 
 Disp.Matrix <- function(Species,Season,MSP,MSPlowerCI=NA,MSPupperCI=NA,writeout="none",outdir=NULL, rounding = "round", digits = 0){
