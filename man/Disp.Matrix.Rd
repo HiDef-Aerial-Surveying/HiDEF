@@ -53,7 +53,6 @@ Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, wr
 #with lower and upper CI and word print out
 Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", outdir="C:/Temp/")
 
-#'
 #with lower and upper CI and word print out and set number of digits
 Disp.Matrix("Kittiwake", "Breeding", MSP=250, MSPlowerCI=150, MSPupperCI=275, writeout="word", digits = 2, outdir="C:/Temp/")
 }
